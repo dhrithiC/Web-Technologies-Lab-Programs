@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Text Scroller</title>
+	<style type="text/css">
+		#text
+		{
+			font-family: tahoma;
+			overflow: auto;
+			position: fixed;
+		}
+	</style>
+	<script type="text/javascript">
+		function init()
+		{
+			text = document.getElementById('text');
+			dx = 5;
+			dy = 2;
+			text.style.left = window.innerWidth - text.offsetWidth + 'px';
+			scrollLeft();
+			setInterval(changeColor, 1000);
+		}
+		function changeColor()
+		{
+			text.style.color = 'rgb(' + parseInt(Math.random()*255) + ', ' + parseInt(Math.random()*255) + ', ' + parseInt(Math.random()*255) + ')';
+		}
+		function scrollLeft()
+		{
+			if(text.offsetLeft <= 0)
+				scrollDown();
+			else
+			{
+				text.style.left = text.offsetLeft - dx + 'px';
+				setTimeout(scrollLeft, 50);
+			}
+		}
+		function scrollRight()
+		{
+			if(text.offsetLeft >= window.innerWidth - text.offsetWidth)
+				scrollLeft();
+			else
+			{
+				text.style.left = text.offsetLeft + dx + 'px';
+				setTimeout(scrollRight, 50);
+			}
+		}
+		function scrollDown()
+		{
+			console.log('down');
+			if(text.offsetTop >= window.innerHeight - text.offsetHeight)
+				scrollUp();
+			else
+			{
+				text.style.top = text.offsetTop + dy + 'px';
+				setTimeout(scrollDown, 50);
+			}
+		}
+		function scrollUp()
+		{
+			console.log('up');
+			if(text.offsetTop <= 0)
+				scrollRight();
+			else
+			{
+				text.style.top = text.offsetTop - 23*dy + 'px';
+				setTimeout(scrollUp, 50);
+			}
+		}
+	</script>
+</head>
+<body onload="init()">
+	<h3 id="text">We don't need no education!</h3>
+</body>
+</html>
